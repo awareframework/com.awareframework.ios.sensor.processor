@@ -1,4 +1,4 @@
-# AWARE Processor Sensor
+# AWARE: Processor
 
 The processor sensor samples app process resource usage and device processor state on iOS.
 It is designed for periodic, low-overhead monitoring of the AwareClient process, not for
@@ -20,11 +20,11 @@ Then import the module:
 import com_awareframework_ios_sensor_processor
 ```
 
-## Usage
+## Example Usage
 
 ```swift
 let sensor = ProcessorSensor(ProcessorSensor.Config().apply { config in
-    config.interval = 60 // seconds
+    config.sampleIntervalSeconds = 60
 })
 
 sensor.start()
@@ -36,18 +36,18 @@ To stop collection:
 sensor.stop()
 ```
 
-## Configuration
+### ProcessorSensor.Config
 
-`ProcessorSensor.Config` extends the common AWARE `SensorConfig`.
+Class to hold the configuration of the sensor.
 
-| Property | Type | Default | Description |
-| --- | --- | --- | --- |
-| `interval` | `Int` | `60` | Sampling interval in seconds. Values less than `1` are ignored. |
-| `sensorObserver` | `ProcessorObserver?` | `nil` | Callback for live processor samples. |
-| `dbPath` | `String` | `aware_processor` | SQLite database path stem. |
-| `dbTableName` | `String?` | `ios_processor` in AwareClient | Active database table name. |
+#### Fields
 
-## Data Model
++ `sampleIntervalSeconds: Int`: Sampling interval in seconds. Values less than `1` are ignored. (default = `60`)
++ `sensorObserver: ProcessorObserver?`: Callback for live processor samples. (default = `nil`)
++ `dbPath: String`: SQLite database path stem. (default = `"aware_processor"`)
++ `dbTableName: String?`: Active database table name. (default = `"ios_processor"` in AwareClient)
+
+## Data Representations
 
 `ProcessorData` stores the following fields:
 
@@ -66,7 +66,7 @@ sensor.stop()
 | `thermalState` | `Int` | `0` nominal, `1` fair, `2` serious, `3` critical, `-1` unknown. |
 | `lowPowerMode` | `Int` | `1` when Low Power Mode is enabled, otherwise `0`. |
 
-## Notifications
+## Broadcasts
 
 | Notification | Description |
 | --- | --- |
@@ -87,7 +87,7 @@ final class Observer: ProcessorObserver {
 }
 
 let config = ProcessorSensor.Config().apply { config in
-    config.interval = 30
+    config.sampleIntervalSeconds = 30
     config.sensorObserver = Observer()
 }
 
