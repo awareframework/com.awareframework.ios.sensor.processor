@@ -1,5 +1,7 @@
 # AWARE: Processor
 
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+
 The processor sensor samples app process resource usage and device processor state on iOS.
 It is designed for periodic, low-overhead monitoring of the AwareClient process, not for
 system-wide CPU profiling.
