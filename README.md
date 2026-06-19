@@ -96,3 +96,9 @@ let config = ProcessorSensor.Config().apply { config in
 let sensor = ProcessorSensor(config)
 sensor.start()
 ```
+
+## Related Links
+
+- [ProcessInfo | Apple Developer Documentation](https://developer.apple.com/documentation/foundation/processinfo)
+- [ProcessInfo.ThermalState | Apple Developer Documentation](https://developer.apple.com/documentation/foundation/processinfo/thermalstate-swift.enum)
+- [isLowPowerModeEnabled | Apple Developer Documentation](https://developer.apple.com/documentation/foundation/processinfo/islowpowermodeenabled)
