@@ -10,17 +10,15 @@ Records are stored in `ios_processor` under the `aware_processor.sqlite` databas
 
 ## Installation
 
-Add the package to your app target:
+Add the package with Swift Package Manager:
 
-```text
-https://github.com/awareframework/com.awareframework.ios.sensor.processor.git
-```
+- Package URL: `https://github.com/awareframework/com.awareframework.ios.sensor.processor.git`
+- Product: `com.awareframework.ios.sensor.processor`
+- Module: `import com_awareframework_ios_sensor_processor`
 
-Then import the module:
+See the [core package README](https://github.com/awareframework/com.awareframework.ios.core#installation) for the Xcode, `Package.swift` and command-line installation steps.
 
-```swift
-import com_awareframework_ios_sensor_processor
-```
+**Info.plist:** no usage description is required.
 
 ## Example Usage
 
