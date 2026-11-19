@@ -58,6 +58,7 @@ public class ProcessorSensor: AwareSensor {
 
         public override init() {
             super.init()
+            dbTableName = ProcessorData.databaseTableName
             dbPath = "aware_processor"
         }
 
@@ -79,10 +80,32 @@ public class ProcessorSensor: AwareSensor {
         self.init(ProcessorSensor.Config())
     }
 
+
+    /// Creates this sensor's table if it does not exist yet, so that the first save does not fail.
+    /// Failures are logged: without the table, the data cannot be saved or uploaded.
+    private func initializeTables() {
+        guard CONFIG.dbType == .sqlite else { return }
+        guard let queue = (dbEngine as? SQLiteEngine)?.getSQLiteInstance() else {
+            print(ProcessorSensor.TAG, "[Error] Cannot open the database '\(CONFIG.dbPath)'. The table is not created.")
+            return
+        }
+        let tables: [(name: String, create: () throws -> Void)] = [
+            (ProcessorData.databaseTableName, { try ProcessorData.createTable(queue: queue) }),
+        ]
+        for table in tables {
+            do {
+                try table.create()
+            } catch {
+                print(ProcessorSensor.TAG, "[Error] Cannot create the table '\(table.name)': \(error)")
+            }
+        }
+    }
+
     public init(_ config: ProcessorSensor.Config) {
         super.init()
         CONFIG = config
         initializeDbEngine(config: config)
+        initializeTables()
         super.syncConfig = DbSyncConfig().apply { config in
             config.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.processor.sync.queue")
         }
